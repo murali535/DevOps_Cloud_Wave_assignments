@@ -1,0 +1,352 @@
+az aks get-credentials --resource-group k8stest --name k8stest
+
+
+
+
+az aks get-credentials --resource-group k8stest --name k8stest
+
+
+prathamesh@Azure:~$ az aks get-credentials --resource-group k8stest --name k8stest
+Merged "k8stest" as current context in /home/prathamesh/.kube/config
+prathamesh@Azure:~$ kubectl get pod
+No resources found.
+prathamesh@Azure:~$ kubectl get node
+NAME                       STATUS   ROLES   AGE   VERSION
+aks-agentpool-38556967-0   Ready    agent   15m   v1.12.6
+aks-agentpool-38556967-1   Ready    agent   15m   v1.12.6
+prathamesh@Azure:~$
+
+prathamesh@Azure:~$ mv linux-amd64/helm /usr/local/bin/helm
+mv: replace '/usr/local/bin/helm', overriding mode 0755 (rwxr-xr-x)? y
+mv: inter-device move failed: 'linux-amd64/helm' to '/usr/local/bin/helm'; unable to remove target: Permission denied
+prathamesh@Azure:~$ helm help
+The Kubernetes package manager
+
+To begin working with Helm, run the 'helm init' command:
+
+        $ helm init
+
+This will install Tiller to your running Kubernetes cluster.
+It will also set up any necessary local configuration.
+
+Common actions from this point include:
+
+- helm search:    search for charts
+- helm fetch:     download a chart to your local directory to view
+- helm install:   upload the chart to Kubernetes
+- helm list:      list releases of charts
+
+Environment:
+  $HELM_HOME           set an alternative location for Helm files. By default, these are stored in ~/.helm
+  $HELM_HOST           set an alternative Tiller host. The format is host:port
+  $HELM_NO_PLUGINS     disable plugins. Set HELM_NO_PLUGINS=1 to disable plugins.
+  $TILLER_NAMESPACE    set an alternative Tiller namespace (default "kube-system")
+  $KUBECONFIG          set an alternative Kubernetes configuration file (default "~/.kube/config")
+  $HELM_TLS_CA_CERT    path to TLS CA certificate used to verify the Helm client and Tiller server certificates (default "$HELM_HOME/ca.pem")
+  $HELM_TLS_CERT       path to TLS client certificate file for authenticating to Tiller (default "$HELM_HOME/cert.pem")
+  $HELM_TLS_KEY        path to TLS client key file for authenticating to Tiller (default "$HELM_HOME/key.pem")
+  $HELM_TLS_ENABLE     enable TLS connection between Helm and Tiller (default "false")
+  $HELM_TLS_VERIFY     enable TLS connection between Helm and Tiller and verify Tiller server certificate (default "false")
+  $HELM_TLS_HOSTNAME   the hostname or IP address used to verify the Tiller server certificate (default "127.0.0.1")
+  $HELM_KEY_PASSPHRASE set HELM_KEY_PASSPHRASE to the passphrase of your PGP private key. If set, you will not be prompted for
+                       the passphrase while signing helm charts
+
+Usage:
+  helm [command]
+
+Available Commands:
+  completion  Generate autocompletions script for the specified shell (bash or zsh)
+  create      create a new chart with the given name
+  delete      given a release name, delete the release from Kubernetes
+  dependency  manage a chart's dependencies
+  fetch       download a chart from a repository and (optionally) unpack it in local directory
+  get         download a named release
+  help        Help about any command
+  history     fetch release history
+  home        displays the location of HELM_HOME
+  init        initialize Helm on both client and server
+  inspect     inspect a chart
+  install     install a chart archive
+  lint        examines a chart for possible issues
+  list        list releases
+  package     package a chart directory into a chart archive
+  plugin      add, list, or remove Helm plugins
+  repo        add, list, remove, update, and index chart repositories
+  reset       uninstalls Tiller from a cluster
+  rollback    roll back a release to a previous revision
+  search      search for a keyword in charts
+  serve       start a local http web server
+  status      displays the status of the named release
+  template    locally render templates
+  test        test a release
+  upgrade     upgrade a release
+  verify      verify that a chart at the given path has been signed and is valid
+  version     print the client/server version information
+
+Flags:
+      --debug                           enable verbose output
+  -h, --help                            help for helm
+      --home string                     location of your Helm config. Overrides $HELM_HOME (default "/home/prathamesh/.helm")
+      --host string                     address of Tiller. Overrides $HELM_HOST
+      --kube-context string             name of the kubeconfig context to use
+      --kubeconfig string               absolute path to the kubeconfig file to use
+      --tiller-connection-timeout int   the duration (in seconds) Helm will wait to establish a connection to tiller (default 300)
+      --tiller-namespace string         namespace of Tiller (default "kube-system")
+
+Use "helm [command] --help" for more information about a command.
+
+
+prathamesh@Azure:~$ helm init
+Creating /home/prathamesh/.helm
+Creating /home/prathamesh/.helm/repository
+Creating /home/prathamesh/.helm/repository/cache
+Creating /home/prathamesh/.helm/repository/local
+Creating /home/prathamesh/.helm/plugins
+Creating /home/prathamesh/.helm/starters
+Creating /home/prathamesh/.helm/cache/archive
+Creating /home/prathamesh/.helm/repository/repositories.yaml
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com
+Adding local repo with URL: http://127.0.0.1:8879/charts
+$HELM_HOME has been configured at /home/prathamesh/.helm.
+
+Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
+
+Please note: by default, Tiller is deployed with an insecure 'allow unauthenticated users' policy.
+To prevent this, run `helm init` with the --tiller-tls-verify flag.
+For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+Happy Helming!
+prathamesh@Azure:~$
+
+prathamesh@Azure:~$ kubectl get pods -n kube-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+coredns-754f947b4-49dxf                 1/1     Running   0          25m
+coredns-754f947b4-mpglg                 1/1     Running   0          28m
+coredns-autoscaler-6fcdb7d64-vz8sj      1/1     Running   0          28m
+heapster-5fb7488d97-vf2l9               2/2     Running   0          28m
+kube-proxy-hw4bc                        1/1     Running   0          25m
+kube-proxy-x8tdq                        1/1     Running   0          25m
+kube-svc-redirect-lk75g                 2/2     Running   0          25m
+kube-svc-redirect-q4pl2                 2/2     Running   0          25m
+kubernetes-dashboard-847bb4ddc6-m28dr   1/1     Running   0          28m
+metrics-server-7b97f9cd9-lmbp8          1/1     Running   0          28m
+omsagent-b2l4s                          1/1     Running   1          25m
+omsagent-bkn9m                          1/1     Running   0          25m
+omsagent-rs-549f9c4dd6-bbgw5            1/1     Running   0          28m
+tiller-deploy-76c878bf55-r28f8          1/1     Running   0          61s
+tunnelfront-6bc65fd79c-v8ndp            1/1     Running   0          28m
+prathamesh@Azure:~$
+
+prathamesh@Azure:~/tutorials/mean-k8s$ cd helm-chart/
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ ls
+Chart.yaml  requirements.lock  requirements.yaml  templates  values.yaml
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ kubectl get sc
+NAME                PROVISIONER                AGE
+default (default)   kubernetes.io/azure-disk   55m
+managed-premium     kubernetes.io/azure-disk   55m
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ vi azure-premium.yaml
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ cat azure-premium.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 15Gi
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ kubectl apply -f azure-premium.yaml
+persistentvolumeclaim/azure-managed-disk created
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ kubectl get sc
+NAME                PROVISIONER                AGE
+default (default)   kubernetes.io/azure-disk   59m
+managed-premium     kubernetes.io/azure-disk   59m
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart
+
+prathamesh@Azure:~/tutorials/mean-k8s/helm-chart$ helm dep list
+NAME    VERSION REPOSITORY                                              STATUS
+mongodb 0.4.x   https://kubernetes-charts.storage.googleapis.com/       missing
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ helm dep update helm-chart/
+Hang tight while we grab the latest from your chart repositories...
+...Unable to get an update from the "local" chart repository (http://127.0.0.1:8879/charts):
+        Get http://127.0.0.1:8879/charts/index.yaml: dial tcp 127.0.0.1:8879: connect: connection refused
+...Successfully got an update from the "stable" chart repository
+Update Complete. ?Happy Helming!?
+Saving 1 charts
+Downloading mongodb from repo https://kubernetes-charts.storage.googleapis.com/
+Deleting outdated charts
+prathamesh@Azure:~/tutorials/mean-k8s$
+
+prathamesh@Azure:~/tutorials/mean-k8s$ helm install  --name my-mean-app helm-chart/
+Error: release my-mean-app failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get resource "namespaces" in API group ""in the namespace "default"
+prathamesh@Azure:~/tutorials/mean-k8s$ helm install  --name my-mean-app helm-chart/
+Error: release my-mean-app failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get resource "namespaces" in API group ""in the namespace "default"
+prathamesh@Azure:~/tutorials/mean-k8s$ helm install  --name my-mean-app helm-chart/
+Error: release my-mean-app failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get resource "namespaces" in API group ""in the namespace "default"
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl create serviceaccount --namespace kube-system tiller
+Error from server (AlreadyExists): serviceaccounts "tiller" already exists
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+clusterrolebinding.rbac.authorization.k8s.io/tiller-cluster-rule created
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+deployment.extensions/tiller-deploy patched
+===============================================
+
+*****Error********
+
+prathamesh@Azure:~/tutorials/mean-k8s$ helm install  --name my-mean-app helm-chart/
+Error: release my-mean-app failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get resource "namespaces" in API group ""in the namespace "default"
+
+*****SOLUTION*******
+
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+
+===============================================
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ helm install  --name my-mean-app helm-chart/
+NAME:   my-mean-app
+LAST DEPLOYED: Thu Apr  4 10:04:20 2019
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/PersistentVolumeClaim
+NAME                 STATUS   VOLUME   CAPACITY  ACCESS MODES  STORAGECLASS  AGE
+my-mean-app-mongodb  Pending  default  0s
+
+==> v1/Pod(related)
+NAME                                   READY  STATUS             RESTARTS  AGE
+my-mean-app-mean-k8s-6f67d7d694-sfjvz  0/1    ContainerCreating  0         0s
+my-mean-app-mongodb-597d8c95bf-n2cff   0/1    Pending            0         0s
+
+==> v1/Secret
+NAME                 TYPE    DATA  AGE
+my-mean-app-mongodb  Opaque  2     0s
+
+==> v1/Service
+NAME                  TYPE       CLUSTER-IP    EXTERNAL-IP  PORT(S)         AGE
+my-mean-app-mean-k8s  NodePort   10.0.235.214  <none>       3000:31581/TCP  0s
+my-mean-app-mongodb   ClusterIP  10.0.224.124  <none>       27017/TCP       0s
+
+==> v1beta1/Deployment
+NAME                  READY  UP-TO-DATE  AVAILABLE  AGE
+my-mean-app-mean-k8s  0/1    1           0          0s
+my-mean-app-mongodb   0/1    1           0          0s
+
+
+NOTES:
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services my-mean-app-mean-k8s)
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT/login
+
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get pod
+NAME                                    READY   STATUS    RESTARTS   AGE
+my-mean-app-mean-k8s-6f67d7d694-sfjvz   1/1     Running   1          3m2s
+my-mean-app-mongodb-597d8c95bf-n2cff    1/1     Running   0          3m2s
+prathamesh@Azure:~/tutorials/mean-k8s$
+
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl logs -f my-mean-app-mean-k8s-6f67d7d694-sfjvz
+> MeanMapsApp@1.0.0 start /app
+> node server.js
+
+App listening on port 3000
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl logs -f  my-mean-app-mongodb-597d8c95bf-n2cff
+
+Welcome to the Bitnami mongodb container
+Subscribe to project updates by watching https://github.com/bitnami/bitnami-docker-mongodb
+Submit issues and feature requests at https://github.com/bitnami/bitnami-docker-mongodb/issues
+Send us your feedback at containers@bitnami.com
+
+nami    INFO  Initializing mongodb
+mongodb INFO  ==> Creating root user...
+mongodb INFO  ==> Creating meanmapsapp user...
+mongodb INFO  ==> Enabling authentication...
+mongodb INFO
+mongodb INFO  ########################################################################
+mongodb INFO   Installation parameters for mongodb:
+mongodb INFO     Root Password: **********
+mongodb INFO     Username: meanmapsapp
+mongodb INFO     Password: **********
+mongodb INFO     Database: meanmapsapp
+mongodb INFO   (Passwords are not shown for security reasons)
+mongodb INFO  ########################################################################
+mongodb INFO
+nami    INFO  mongodb successfully initialized
+INFO  ==> Starting mongodb...
+INFO  ==> Starting mongod...
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] MongoDB starting : pid=87 port=27017 dbpath=/opt/bitnami/mongodb/data/db 64-bit host=my-mean-app-mongodb-597d8c95bf-n2cff
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] db version v3.7.1
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] git version: 86c02f1c786ccf46f97f4561ab0ad85aed87c297
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] modules: none
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] build environment:
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten]     distmod: debian81
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten]     distarch: x86_64
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+2019-04-04T10:06:13.177+0000 I CONTROL  [initandlisten] options: { config: "/opt/bitnami/mongodb/conf/mongodb.conf", net: { bindIp: "0.0.0.0", port: 27017, unixDomainSocket: { enabled: true, pathPrefix: "/opt/bitnami/mongodb/tmp" } }, processManagement: { fork: false, pidFilePath: "/opt/bitnami/mongodb/tmp/mongodb.pid" }, security: {authorization: "enabled" }, setParameter: { enableLocalhostAuthBypass: "false" }, storage: { dbPath: "/opt/bitnami/mongodb/data/db", journal: { enabled: true } }, systemLog: { destination: "file", logAppend: true, path: true } }
+2019-04-04T10:06:13.177+0000 I STORAGE  [initandlisten] Detected data files in /opt/bitnami/mongodb/data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2019-04-04T10:06:13.177+0000 I STORAGE  [initandlisten]
+2019-04-04T10:06:13.177+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2019-04-04T10:06:13.177+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2019-04-04T10:06:13.177+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=2972M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2019-04-04T10:06:14.128+0000 I STORAGE  [initandlisten] WiredTiger message [1554372374:128522][87:0x7f9a12eb8a00], txn-recover: Main recovery loop: starting at 1/19584
+2019-04-04T10:06:14.225+0000 I STORAGE  [initandlisten] WiredTiger message [1554372374:225111][87:0x7f9a12eb8a00], txn-recover: Recovering log 1 through 2
+2019-04-04T10:06:14.292+0000 I STORAGE  [initandlisten] WiredTiger message [1554372374:292859][87:0x7f9a12eb8a00], txn-recover: Recovering log 2 through 2
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten]
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten] ** NOTE: This is a development version (3.7.1) of MongoDB.
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten] **       Not recommended for production.
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten]
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten]
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2019-04-04T10:06:14.426+0000 I CONTROL  [initandlisten]
+2019-04-04T10:06:14.434+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/opt/bitnami/mongodb/data/db/diagnostic.data'
+2019-04-04T10:06:14.434+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+2019-04-04T10:06:18.619+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:60756 #1 (1 connection now open)
+2019-04-04T10:06:18.620+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:60756 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.7.1" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.15.0-1037-azure" } }
+2019-04-04T10:06:18.622+0000 I NETWORK  [conn1] end connection 127.0.0.1:60756 (0 connections now open)
+2019-04-04T10:06:28.619+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:60832 #2 (1 connection now open)
+2019-04-04T10:06:28.619+0000 I NETWORK  [conn2] received client metadata from 127.0.0.1:60832 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.7.1" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.15.0-1037-azure" } }
+2019-04-04T10:06:28.622+0000 I NETWORK  [conn2] end connection 127.0.0.1:60832 (0 connections now open)
+2019-04-04T10:06:33.470+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:60880 #3 (1 connection now open)
+2019-04-04T10:06:33.470+0000 I NETWORK  [conn3] received client metadata from 127.0.0.1:60880 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.7.1" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.15.0-1037-azure"
+
+
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get pod
+NAME                                    READY   STATUS    RESTARTS   AGE
+my-mean-app-mean-k8s-6f67d7d694-sfjvz   1/1     Running   1          11m
+my-mean-app-mongodb-597d8c95bf-n2cff    1/1     Running   0          11m
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get mode
+error: the server doesn't have a resource type "mode"
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get node
+NAME                       STATUS   ROLES   AGE   VERSION
+aks-agentpool-38556967-0   Ready    agent   83m   v1.12.6
+aks-agentpool-38556967-1   Ready    agent   83m   v1.12.6
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get pvc
+NAME                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+azure-managed-disk    Bound    pvc-c072d7c9-56be-11e9-8e03-6e2b676d5c51   15Gi       RWO            managed-premium   27m
+my-mean-app-mongodb   Bound    pvc-04322915-56c1-11e9-8e03-6e2b676d5c51   8Gi        RWO            default           11m
+prathamesh@Azure:~/tutorials/mean-k8s$ kubectl get svc
+NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes             ClusterIP   10.0.0.1       <none>        443/TCP          87m
+my-mean-app-mean-k8s   NodePort    10.0.235.214   <none>        3000:31581/TCP   11m
+my-mean-app-mongodb    ClusterIP   10.0.224.124   <none>        27017/TCP        11m
+prathamesh@Azure:~/tutorials/mean-k8s$
+
+
+
+
