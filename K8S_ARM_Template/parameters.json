@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "k8stest"
+        },
+        "location": {
+            "value": "southeastasia"
+        },
+        "dnsPrefix": {
+            "value": "k8stest-dns"
+        },
+        "agentCount": {
+            "value": 2
+        },
+        "agentVMSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "servicePrincipalClientId": {
+            "value": null
+        },
+        "servicePrincipalClientSecret": {
+            "value": null
+        },
+        "kubernetesVersion": {
+            "value": "1.12.6"
+        },
+        "networkPlugin": {
+            "value": "kubenet"
+        },
+        "enableRBAC": {
+            "value": true
+        },
+        "enableHttpApplicationRouting": {
+            "value": false
+        },
+        "workspaceName": {
+            "value": "DefaultWorkspace-ad5e02fc-52c0-48fb-92de-10f40579f27c-EUS"
+        },
+        "omsWorkspaceId": {
+            "value": "/subscriptions/ad5e02fc-52c0-48fb-92de-10f40579f27c/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-ad5e02fc-52c0-48fb-92de-10f40579f27c-eus"
+        },
+        "workspaceRegion": {
+            "value": "eastus"
+        },
+        "principalId": {
+            "value": "fe9b4fb2-ea10-4f47-b9b9-a5c444c97190"
+        }
+    }
+}
